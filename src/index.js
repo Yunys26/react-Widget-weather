@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import WidgetWeather from './WidgetWeather';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <WidgetWeather />
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

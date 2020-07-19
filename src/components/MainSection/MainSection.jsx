@@ -2,6 +2,7 @@ import React from 'react';
 import './style-MainSection.css';
 import Tabs from './Tabs/Tabs';
 import Table from './Table/Table';
+import Input from './Input/Input';
 
 const MainSection = (props) => {
     return (
@@ -15,10 +16,7 @@ const MainSection = (props) => {
                 <img src={'./iconMain/sun.svg'} alt=""></img> */}
             </div>
             {/* <div className="main__form"> */}
-                <form>
-                    <input placeholder="Enter your city..." width/>
-                    <button className="">Send</button>
-                </form>
+                <Input />
                 <Tabs />
                 <Table />
             {/* </div> */}   
