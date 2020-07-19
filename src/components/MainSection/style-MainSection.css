@@ -1,0 +1,52 @@
+.main {
+    padding-top: 7%;
+}
+
+.main > form {
+    text-align: center;
+}
+
+.main > form > button {
+    margin-left: 2%;
+    width: 7%;
+    height: 3rem;
+    border-radius: 20px;
+    border: #c5d7d9;
+    box-shadow: 0 3px 0 rgba(154, 147, 140, 0.5);
+}
+
+.main > form > button:hover {
+    transition: 1s;
+    background-color: #7dbbb9;
+    border: 2px solid #2a5d68;
+}
+
+.main > form > button:active {
+    color: #ffffff;
+    border: 2px solid #2a5d68;
+    background-color: #b8b1dd;
+}
+
+.main > form > input {
+    width: 20%;
+    height: 3rem;
+    padding: 0.5rem;
+    border-radius: 20px;
+    border: #c5d7d9;
+    box-shadow: 0 3px 0 rgba(154, 147, 140, 0.5);
+    font-size: 1em;
+}
+
+.main__tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main__table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+

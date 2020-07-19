@@ -1,0 +1,43 @@
+.header {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.header:hover {
+    transition: 2s;
+    background-color: #2a5d68;
+}
+.header__logo {
+    margin-top: 0.5%;
+}
+
+.header__list {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__list > div {
+    width: 150px;
+    height: 53px;
+    border-radius: 20%;
+    padding: 1rem;
+    margin-right: 2rem;
+    
+    text-align: center;
+}
+
+.header__list > div:last-child {
+    margin-right: 0;
+}
+
+.header__list > div:hover {
+    border: 1px solid #2a5d68;
+    background-color: aliceblue;
+    box-shadow: 2px 2px 5px rgba(154, 147, 140, 0.5), 1px 1px 5px rgba(255, 255, 255, 1);
+    box-shadow: inset;
+    transition: 1s;
+}
+
