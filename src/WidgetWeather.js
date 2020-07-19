@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router,} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import './WidgetWeather.css';
 import Header from './components/Header/Header';
 import MainSection from './components/MainSection/MainSection';
