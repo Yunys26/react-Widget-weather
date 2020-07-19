@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +9,43 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #c5d7d9;
+  /*
+  1. Нежно-персиковый — FED6BC
+  2. Светло-желтый — FFFADD
+  3. Пастельно-небесный — DEF7FE
+  4. Светло-лиловый — E7ECFF
+  5. Салатовый — C3FBD8
+  6. Нежно-розовый — FDEED9
+  7. Лаймовый — F6FFF8
+  8. Аквамариновый — B5F2EA
+  9. Сиреневый — C6D8FF 
+  #2a5d68
+  #7dbbb9
+  #c5d7d9
+  #d8d3d0
+  #dcdbe1
+  */
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  color: #000000;
+  text-decoration: none;
+}
+
+input {
+  outline: none;
+}
+
+button {
+  outline: none;
 }
