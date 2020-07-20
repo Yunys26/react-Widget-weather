@@ -7,9 +7,12 @@ const Header = (props) => {
         <header className="header">
             <img src={logo} className="header__logo" alt="logo" height="48px" width="48px"></img>
             <ul className="header__list">
-                <div><a href="#1">Search Country</a></div>
-                <div><a href="#1">Tab's</a></div>
-                <div><a href="#1">Table</a></div>
+            {/* Доделать релизацию ссылки якоря, если это будет актуально \
+            https://www.npmjs.com/package/react-scrollable-anchor
+            */}
+                <div><a href="#form">Search Country</a></div>
+                <div><a href="#tabs">Tab's</a></div>
+                <div><a href="#table">Table</a></div>
             </ul>
         </header>
     );

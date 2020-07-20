@@ -3,7 +3,7 @@ import './style-table.css';
 
 const Table = (props) => {
     return (
-        <div className="main__table">
+        <div className="main__table" name="table">
             <table>
                 <colgroup>
 

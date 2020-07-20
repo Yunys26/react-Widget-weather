@@ -61,7 +61,7 @@ class Input extends Component {
         // const { valInput } = this.obj;
         // console.log({valInput});
         return (
-                <form onSubmit={this.submit}>
+                <form onSubmit={this.submit} name="form">
                     <input ref={this.refWae} name="text" value={text} onChange={this.change} placeholder="Enter your city..."/>
                     <button>Send</button>
                     <p onChange={this.change}>{text}</p>
