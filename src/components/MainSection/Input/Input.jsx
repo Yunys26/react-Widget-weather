@@ -1,73 +1,81 @@
 import React, { Component } from 'react';
 
-// const Input = (props) => {
-        
-//     return (
-//         <form>
-//             <input placeholder="Enter your city..." width/>
-//             <button className="">Send</button>
-//         </form>
-//     );
-// };
-
 class Input extends Component {
-    // Нужно как то отравлять данные в таблицу, и получать ответ от апи 
-    // constructor (props) {
-    //     super (props);
-        
-    //     this.state = {
-    //         text: ''
-    //     }
-    // }
-    state = {
-        text: '',
-        error: null,
-        isLoaded: false,
-        items: []
+    constructor () {
+        super();
+        this.state = {
+            text: null
+        };
     }
-    obj = {
-        val: '',
-    }
-
-    refWae = React.createRef();
-
-    change = (event) => {
-        const {name, value} = event.target;
+    changeInput = (e) => {
+        const {name, value} = e.target;
         this.setState({
             [name]: value
-        });
+        })
     };
-    
-    submit = (event) => {
-        event.preventDefault();
-        console.log(this.refWae.current.value);
-        console.log(this.obj);
-        this.obj.val = this.refWae.current.value;
-    };
-    // bcd470ab4ddba97b244ed20fafeb41a7
-    // componentDidMount() {
-    //     fetch (`api.openweathermap.org/data/2.5/weather?q=${}&appid=${bcd470ab4ddba97b244ed20fafeb41a7}`).then(res => res.json()).then((result) => {
-    //         this.setState({
-    //             isLoaded: true,
-    //             items: result.items
-    //         })
-
-    //     });
-    // }
-
-
     render () {
         const { text } = this.state;
-        // const { valInput } = this.obj;
-        // console.log({valInput});
         return (
-                <form onSubmit={this.submit} name="form">
-                    <input ref={this.refWae} name="text" value={text} onChange={this.change} placeholder="Enter your city..."/>
-                    <button>Send</button>
-                    <p onChange={this.change}>{text}</p>
-                </form>
+            <input name="text" value={text} placeholder="Enter your city..."/>
         );
     }
 }
 
 export default Input;
+
+
+   // Нужно как то отравлять данные в таблицу, и получать ответ от апи 
+    // constructor (props) {
+    //     super (props);
+        
+    //     this.state = {
+    //         text: ''
+    //     };
+    //     this.inputValue = {
+    //         inputText: null
+    //     };
+    // }
+
+
+    // change = (event) => {
+    //     const {name, value} = event.target;
+    //     this.setState({
+    //         [name]: value
+    //     });
+    // };
+    
+    // submit = (event) => {
+    //     event.preventDefault();
+    //     // Присваиваем в объект значения input
+    //     this.inputValue.inputText = this.state.text;
+    //     // // очищаем input
+    //     // this.refWae.current.value = '';
+    //     // console.log(this.refWae.current.value);
+    //     console.log(this.inputValue);
+    // };
+    // // Ссылка на input (создание ссылки на input)
+    // refWae = React.createRef();
+    // // bcd470ab4ddba97b244ed20fafeb41a7
+    // // componentDidMount() {
+    // //     let response = null
+    // //     const api = "bcd470ab4ddba97b244ed20fafeb41a7";
+    // //     fetch("api.openweathermap.org/data/2.5/weather?q="+this.inputVal.val+"&appid="+api).then((response) => {
+    // //         retrun response.json();
+    // //     })
+    // // }
+    // render () {
+    //     console.log(this.inputVal)
+    //     const { text } = this.state;
+    //     return (
+    //         <div className="main__form">
+    //             <form onSubmit={this.submit} name="form">
+    //                 <input ref={this.refWae} name="text" value={text} onChange={this.change} placeholder="Enter your city..."/>
+    //                 <button>Send</button>
+    //                 <p onChange={this.change}>{text}</p>
+    //                 <p>{this.props.name}</p>
+    //             </form>
+    //             <Table textValue={this.inputValue.inputText}/>
+    //             <Tabs />
+    //         </div>
+    //     );
+    // }

@@ -1,20 +1,36 @@
 .tabs {
     text-align: center;
-    max-width: 350px;
+    max-width: 40%;
+    max-height: 20%;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 4%;
 
 }
+input[type="radio"] {
+    display: none;
+}
+/* .tabsBtn {
+    display: none;
+} */
 label {
+    padding: 3%;
+    border: 0.8px black solid;
     cursor: pointer;
+    border-radius: 20%;
+}
+label:active {
+    background-color: black;
+}
+a:active {
+    color: red;
 }
 .tabsNav{
     margin-right: 1rem;
 }
-
-.tabsBtn {
-    display: none;
-}
+/* input[type="radio"]:checked + label {
+    background-color: red;
+} */
 
 
 /* .tabs>input[type="radio"]:checked+label {
@@ -34,11 +50,15 @@ label {
   display: block;
 } */
 .tabsСontentAll {
-
+    margin-top: 5%;
+    background-color: bisque;
 }
-.tabsContentActive {
 
+.tabsContentActive {
+    background-color: bisque;
+    margin-top: 5%;
 }
 .tabsContentDeleted{
-
+    background-color: bisque;
+    margin-top: 5%;
 }
