@@ -16,7 +16,7 @@
 }
 
 .main > .main__form > form > button:hover {
-    transition: 1s;
+    transition: 0.1s;
     background-color: #7dbbb9;
     border: 2px solid #2a5d68;
 }

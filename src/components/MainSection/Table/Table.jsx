@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 import './style-table.css';
 
 class Table extends Component {
+    /*Данные которые придут с апи можно отображать в таблице с помощью
+    map, принимать массив данныъ, присаивать его впеременную 
+    let arrayData = dataApi.map( element => <th>element.object</th>) */
     // constructor(props) {
     //     super (props)
     // }

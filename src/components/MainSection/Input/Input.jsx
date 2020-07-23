@@ -4,19 +4,22 @@ class Input extends Component {
     constructor () {
         super();
         this.state = {
-            text: null
+            text: '',
         };
+
+        this.handleDataInput = this.handleDataInput.bind(this);
     }
-    changeInput = (e) => {
-        const {name, value} = e.target;
-        this.setState({
-            [name]: value
-        })
-    };
+
+    handleDataInput = (e) => {
+        const target = e.target;
+        const name = target.name;
+
+        this.setState({ [name]: target.value});
+    }
+    // добавить очищение  инпута, возможно через форму или в самом инпуте, но лучше через событие клик по кнопке 
     render () {
-        const { text } = this.state;
         return (
-            <input name="text" value={text} placeholder="Enter your city..."/>
+            <input onChange={this.handleDataInput} value={this.state.text} name="text" type="text" placeholder="Enter your city..."/>
         );
     }
 }
