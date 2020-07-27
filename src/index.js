@@ -1,14 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'mobx-react';
 import './index.css';
 import WidgetWeather from './WidgetWeather';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
+import store from './store/store';
+import optionalStore from './store/optionalStore';
+
+const stores = {
+  store,
+  optionalStore,
+  ButtonStore : store.ButtonStore,
+  InputStore : store.InputStore,
+  TableStore : store.TableStore,
+  TabsStore : store.TabsStore
+
+};
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Provider {...stores}>
     <WidgetWeather />
-  </BrowserRouter>,
+  </Provider>,
   document.getElementById('root')
 );
 

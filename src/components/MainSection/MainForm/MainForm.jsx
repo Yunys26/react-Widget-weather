@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 class MainForm extends Component {
     constructor (props) {
         super (props);
+        this.state = {
+
+        };
     };
     InpUTT = () => {
         return (

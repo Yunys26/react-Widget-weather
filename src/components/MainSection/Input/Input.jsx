@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { observer } from 'mobx-react';
+// import store from '../../../store';
 
 class Input extends Component {
     constructor () {
@@ -6,8 +8,12 @@ class Input extends Component {
         this.state = {
             text: '',
         };
-
+        const objData = {
+            data: this.state.text,
+        }
         this.handleDataInput = this.handleDataInput.bind(this);
+        console.log(this.state);
+        console.log(objData);
     }
 
     handleDataInput = (e) => {
@@ -15,16 +21,19 @@ class Input extends Component {
         const name = target.name;
 
         this.setState({ [name]: target.value});
+        // очищать после имзенения состония input
     }
+
     // добавить очищение  инпута, возможно через форму или в самом инпуте, но лучше через событие клик по кнопке 
     render () {
+        console.log(this.state)
         return (
             <input onChange={this.handleDataInput} value={this.state.text} name="text" type="text" placeholder="Enter your city..."/>
         );
     }
 }
 
-export default Input;
+export default observer(Input);
 
 
    // Нужно как то отравлять данные в таблицу, и получать ответ от апи 

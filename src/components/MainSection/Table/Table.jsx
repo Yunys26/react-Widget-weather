@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 // Библиотека для проверки данных на тип
 // import PropTypes from 'prop-types';
 import './style-table.css';
+import store from '../../../store/store';
+import { observer } from 'mobx-react';
+
 
 class Table extends Component {
     /*Данные которые придут с апи можно отображать в таблице с помощью
@@ -11,6 +14,8 @@ class Table extends Component {
     //     super (props)
     // }
     render () {
+        const { activeColumn } = store;
+        console.log({activeColumn});
         return (
             <div className="main__table" name="table">
                 <table>
@@ -27,7 +32,7 @@ class Table extends Component {
                     </tr>
                     <tr>
                         <th>{this.props.textValue}</th>
-                        <th>2</th>
+                        <th>{activeColumn}</th>
                         <th>3</th>
                         <th>4</th>
                         <th>5</th>
@@ -44,4 +49,4 @@ class Table extends Component {
 // };
 
 
-export default Table;
+export default observer(Table);
