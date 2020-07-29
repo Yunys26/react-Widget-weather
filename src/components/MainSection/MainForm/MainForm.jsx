@@ -23,18 +23,13 @@ class MainForm extends Component {
     // Осуществляет запрос на api и получает ответ 
     formSendCoutry = (e) => {
         e.preventDefault();
-        console.log(this.state);
-        // axios.post(`api.openweathermap.org/data/2.5/weather?q=${this.state.text}&appid=bcd470ab4ddba97b244ed20fafeb41a7`)
-        //     .then( response => {
-        //         console.log(response);
-        //     })
-        //     .catch( error => {
-        //         console.log(error);
-        //     })
-        
+
+
         fetch( `https://api.openweathermap.org/data/2.5/weather?q=${this.state.text}&appid=bcd470ab4ddba97b244ed20fafeb41a7`,)
             .then( response => {
+                // Приходит в state promise
                 this.setState({result: response.json()});
+                console.log(this.state);
                 return console.log(response);
             })
             .catch( error => {
@@ -42,10 +37,12 @@ class MainForm extends Component {
             })
     };
 
+    // написать обработку для неправильного ответа от сервера 
 
+    // добавить очищение  инпута, возможно через форму или в самом инпуте
 
     render () {
-        console.log(this.state);
+        // console.log(this.state);
         const { text }  = this.state;
         return (
             <div className="main__form">
