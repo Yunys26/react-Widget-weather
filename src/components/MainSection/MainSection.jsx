@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import './style-MainSection.css';
-import Tabs from './Tabs/Tabs';
-import Table from './Table/Table';
-import Input from './Input/Input';
-import ButtonSend from './ButtonSend/ButtonSend';
+import MainForm from './MainForm/MainForm';
 
 class MainSection extends Component {
     constructor () {
@@ -35,16 +32,7 @@ class MainSection extends Component {
                     <img src={'./iconMain/storm.svg'} alt=""></img>
                     <img src={'./iconMain/sun.svg'} alt=""></img> */}
                 </div>
-                <div className="main__form">
-                    <form onSubmit={this.submitInfoCountry} name="FormSendCoutry" className="FormSendCoutry">
-                        <Input/>
-                        <ButtonSend/>
-                    </form>
-                    <Table/>
-                    <Tabs/>
-                </div>
-                {/* <Tabs />
-                <Table />  */}
+                <MainForm/>
             </main>
         );
     }

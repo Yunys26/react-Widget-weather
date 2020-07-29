@@ -1,39 +1,36 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
-// import store from '../../../store';
+import store from '../../../store/store';
 
-class Input extends Component {
-    constructor () {
-        super();
-        this.state = {
-            text: '',
-        };
-        const objData = {
-            data: this.state.text,
-        }
-        this.handleDataInput = this.handleDataInput.bind(this);
-        console.log(this.state);
-        console.log(objData);
-    }
+ class Input extends Component {
 
-    handleDataInput = (e) => {
-        const target = e.target;
-        const name = target.name;
+    // constructor (props) {
+    //     super(props);
+    //     this.state = {
+    //         text: '',
+    //     };
+    //     this.handleDataInput = this.handleDataInput.bind(this);
+    //     console.log(this.state);
+    // }
 
-        this.setState({ [name]: target.value});
-        // очищать после имзенения состония input
-    }
+    // handleDataInput = (e) => {
+    //     const target = e.target;
+    //     const name = target.name;
+
+    //     this.setState({ [name]: target.value});
+    //     // очищать после имзенения состония input
+    // }
 
     // добавить очищение  инпута, возможно через форму или в самом инпуте, но лучше через событие клик по кнопке 
     render () {
-        console.log(this.state)
+        const props = this.props
+        // const { inputValue, handleDataInput  } = store;
         return (
-            <input onChange={this.handleDataInput} value={this.state.text} name="text" type="text" placeholder="Enter your city..."/>
+            <input ref={props.ref} onChange={props.onChange} value={props.text} name={props.name} type={props.type} placeholder={props.placeholder}/>
         );
     }
 }
 
-export default observer(Input);
+export default Input;
 
 
    // Нужно как то отравлять данные в таблицу, и получать ответ от апи 
