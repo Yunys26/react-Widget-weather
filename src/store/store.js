@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { decorate, observable, computed, action } from "mobx";
+import { decorate, observable, computed, action, observe } from "mobx";
+import { observer } from "mobx-react";
 // import { element } from 'prop-types';
 
 class store {
@@ -23,22 +24,7 @@ class store {
         let arr = this.tableData.map( (elemArray) => <th>{elemArray.id} = {elemArray.title}</th>);
         return arr;
     };
-
-    // get dataInput () {
-
-    // }; 
-
-        // // Ссылка на input (создание ссылки на input)
-    // refWae = React.createRef();
-    // // bcd470ab4ddba97b244ed20fafeb41a7
-    // // componentDidMount() {
-    // //     let response = null
-    // //     const api = "bcd470ab4ddba97b244ed20fafeb41a7";
-    // //     fetch("api.openweathermap.org/data/2.5/weather?q="+this.inputVal.val+"&appid="+api).then((response) => {
-    // //         retrun response.json();
-    // //     })
-    // // }
-
+    
     handleDataInput (e) {
         const target = e.target;
         const name = target.name;

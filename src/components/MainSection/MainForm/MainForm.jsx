@@ -21,14 +21,15 @@ class MainForm extends Component {
     };
 
     // Осуществляет запрос на api и получает ответ 
-    formSendCoutry = (e) => {
+    formSendCoutry = async (e) => {
         e.preventDefault();
 
-
-        fetch( `https://api.openweathermap.org/data/2.5/weather?q=${this.state.text}&appid=bcd470ab4ddba97b244ed20fafeb41a7`,)
+        await fetch( `https://api.openweathermap.org/data/2.5/weather?q=${this.state.text}&appid=bcd470ab4ddba97b244ed20fafeb41a7`,)
             .then( response => {
                 // Приходит в state promise
-                this.setState({result: response.json()});
+                this.setState( state => {
+                    return {result: state.result = response.json()}
+                });
                 console.log(this.state);
                 return console.log(response);
             })
@@ -56,7 +57,9 @@ class MainForm extends Component {
                     />
                     <ButtonSend />
                 </form>
-                <Table />
+                <Table
+                    dataApi={this.state.result}
+                />
                 <Tabs />
             </div>
         );

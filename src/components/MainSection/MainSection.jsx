@@ -5,23 +5,12 @@ import MainForm from './MainForm/MainForm';
 class MainSection extends Component {
     constructor () {
         super();
-        this.state = { 
-            data: null,
+        this.state = {
+            
         };
+    };
 
-        this.submitInfoCountry = this.submitInfoCountry.bind(this);
-    };
-    // Получить данные с формы 
-    submitInfoCountry = (e) => {
-        e.preventDefault();
-        // this.setState( state => ({
-        //     data: "texts"
-        // }));
-    };
-    // надо понять как перекидывать данные с компонентов input и забиратьс формы данные input и изменять state и получать их тут 
-    // что бы сделать запрос на апи
     render () {
-        console.log(this.state);
         return (
             <main className="main">
                 <div className="main__icon">
