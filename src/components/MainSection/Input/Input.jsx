@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
+// import store from '../../../store/store';
 
-const Input = () => {
-    return (
-        <form>
-            <input placeholder="Enter your city..." width/>
-            <button className="">Send</button>
-        </form>
-    );
-};
+ class Input extends Component {
+
+    render () {
+        const props = this.props
+        // const { inputValue, handleDataInput  } = store;
+        return (
+            <input ref={props.ref} onChange={props.onChange} value={props.text} name={props.name} type={props.type} placeholder={props.placeholder}/>
+        );
+    }
+}
 
 export default Input;

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+// Библиотека для проверки данных на тип
+// import PropTypes from 'prop-types';
 import './style-table.css';
 import store from '../../../store/store';
+import { observer } from 'mobx-react';
+
 
 class Table extends Component {
     /*Данные которые придут с апи можно отображать в таблице с помощью
@@ -43,4 +47,10 @@ class Table extends Component {
     };
 };
 
-export default Table;
+// // Проерка на тип данных
+// Table.PropTypes = {
+//     textValue: PropTypes.string
+// };
+
+
+export default observer(Table);

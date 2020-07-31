@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import Input from '../Input/Input';
-
+import ButtonSend from '../ButtonSend/ButtonSend';
 import Table from '../Table/Table';
 import Tabs from '../Tabs/Tabs';
-import ButtonSend from '../ButtonSend/ButtonSend';
 
 class MainForm extends Component {
     constructor (props) {
@@ -56,7 +55,7 @@ class MainForm extends Component {
                         type="text" 
                         placeholder="Enter your city..."
                     />
-                    <ButtonSend/>
+                    <ButtonSend />
                 </form>
                 <Table
                     dataApi={this.state.result}
