@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import style from './style-tabs.module.css';
 import { NavLink, Route } from 'react-router-dom';
+import { observer } from 'mobx-react';
 
 class Tabs extends Component {
     // console.log(style)
@@ -43,4 +44,4 @@ class Tabs extends Component {
     };
 };
 
-export default Tabs;
+export default observer(Tabs);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { observer } from 'mobx-react';
 
 class ButtonSend extends Component {
     constructor (props) {
@@ -17,4 +18,4 @@ class ButtonSend extends Component {
 
 }
 
-export default ButtonSend;
+export default observer(ButtonSend);

@@ -12,12 +12,15 @@ class Table extends Component {
     let arrayData = dataApi.map( element => <th>element.object</th>) */
     constructor(props) {
         super (props);
-        this.state = {};
+        this.state = {
+        };
     };
 
     render () {
         const { activeColumn } = store;
         console.log({activeColumn});
+        // Axios
+        console.log(this.props.dataApi);
         return (
             <div className="main__table" name="table">
                 <table>

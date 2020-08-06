@@ -1,11 +1,21 @@
 
 import React from 'react';
-import { decorate, observable, computed, action, observe } from "mobx";
-import { observer } from "mobx-react";
+import { decorate, observable, computed, action} from "mobx";
 // import { element } from 'prop-types';
 
 class store {
-    // тестировочное отображение данных в таблице 
+    // тестировочное отображение данных в таблице
+
+    store = observable({
+        
+    })
+
+    allListCountry = null;
+
+    activeListCountry = null;
+
+    deletedListCountry = null;
+
     tableData = [
         {id: 1, title: 'Hey'},
         {id: 2, title: 'Hey is'},
@@ -18,27 +28,25 @@ class store {
         // {id: 9, title: 'Hey vbvfne'},
     ];
 
-    inputValue = null;
-
     get activeColumn() {
         let arr = this.tableData.map( (elemArray) => <th>{elemArray.id} = {elemArray.title}</th>);
         return arr;
     };
+    // нужна фукнция которая будет принимать объект данный и отображать или передавать
+    // handleDataInput (e) {
+    //     const target = e.target;
+    //     const name = target.name;
+
+    //     this.inputValue = {[name]: target.value};
+    //     console.log(this.inputValue);
+    // };
     
-    handleDataInput (e) {
-        const target = e.target;
-        const name = target.name;
-
-        this.inputValue = {[name]: target.value};
-        console.log(this.inputValue);
-    };
-
 }
 
 store = decorate(store, {
+    inputValue: observable,
     tableData: observable,
     activeColumn: computed,
-    inputValue: observable,
     handleDataInput: action,
     
 
