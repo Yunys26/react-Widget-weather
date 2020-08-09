@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
+import './style-input.css';
 // import store from '../../../store/store';
 
 class Input extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
 
     render () {
         const props = this.props
@@ -13,4 +17,4 @@ class Input extends Component {
     }
 }
 
-export default observer(Input);
+export default Input;

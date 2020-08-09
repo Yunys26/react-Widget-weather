@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import './style-MainSection.css';
 import MainForm from './MainForm/MainForm';
-import { observer } from 'mobx-react';
 
 class MainSection extends Component {
     constructor () {
         super();
         this.state = {
-            
         };
     };
-
     render () {
         return (
             <main className="main">
@@ -27,4 +24,4 @@ class MainSection extends Component {
         );
     }
 };
-export default observer(MainSection);
+export default MainSection;
