@@ -5,21 +5,16 @@ import './style-table.module.css';
 import store from '../../../store/store';
 import { observer } from 'mobx-react';
 
+
 @observer
 class Table extends Component {
-    /*Данные которые придут с апи можно отображать в таблице с помощью
-    map, принимать массив данныъ, присаивать его впеременную 
-    let arrayData = dataApi.map( element => <th>element.object</th>) */
     render () {
         // Понять как получить прокси и принять его и записать, или доабвлять в масси и отображать 
         console.log(store.result);
         console.log(store.data);
         return (
-            <div className="main__table" name="table">
-                <table>
-                    <colgroup>
-    
-                    </colgroup>
+            <table>
+                <thead>
                     <tr>
                         <th>
                             <img src="https://img.icons8.com/clouds/100/000000/city.png" alt="city"/>
@@ -47,10 +42,12 @@ class Table extends Component {
                             Удалить/Восстановить
                         </th>
                     </tr>
+                </thead>
+                <tbody>
                     {/* Добавляет город и температуру в таблицу */}
                     {store.addDataTable}
-                </table>
-            </div>
+                </tbody>
+            </table>
         );
     };
 };

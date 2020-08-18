@@ -16,7 +16,7 @@ const stores = {
   ButtonStore : mainStore.ButtonStore,
   InputStore : mainStore.InputStore,
   TableStore : mainStore.TableStore,
-  TabsStore : mainStore.TabsStore
+  TabsStore : mainStore.TabsStore,
 };
 
 ReactDOM.render(

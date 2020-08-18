@@ -24,9 +24,12 @@ class MainForm extends Component {
                     />
                     <ButtonSend className="buttonSend" valueButton="Send"/>
                 </form>
-                <Table
-                    // dataApi={store.result}
-                />
+                <div className="main__table" name="table">
+                    <Table
+                        // dataApi={store.result}
+                    />
+                </div>
+
                 <Tabs />
             </div>
         );
