@@ -1,5 +1,5 @@
 import React from 'react';
-import { action, extendObservable, computed} from "mobx";
+import { action, extendObservable, computed, runInAction} from "mobx";
 import axios from 'axios';
 import ButtonSend from '../components/MainSection/ButtonSend/ButtonSend';
 import Modal from '../components/MainSection/Modal/Modal';
@@ -10,13 +10,17 @@ class Store {
         extendObservable(this, {
             inputValue: '',
             result: null,
-            nameCountry: null,
-            temp: null,
+            id: 0,
             data: [],
+            objStyles: {
+                // true: buttonDel, false:
+                buttonOn: true
+            },
         })
     }
     // Отображение таб "Активные"
     @action returnActive = (e) => {
+        e.preventDefault();
         // В активных отображается все города котоыре не были удалены в копии массива, если удаляет возвращается на то же место либо доавляется в конец 
         console.log("Восстановлен");
         document.querySelector('.modalUseDelete').style.display = 'block';
@@ -24,6 +28,7 @@ class Store {
     };
     // Отображение таб "Удаленные"
     @action deleteCity = (e) => {
+        e.preventDefault();
         // удляет по клику делает копию массива и удаляет данные элемент по назваани города из массив в котором объекты
         console.log("Удален");
         document.querySelector('.modalUseDelete').style.display = 'none';
@@ -37,19 +42,22 @@ class Store {
     // Рендерит строку таблицы 
     @computed get addDataTable () {
         // Проверять на повтор (если вводитсья второй раз москва, то выводиться город уже ввелся)
-        return this.data.map( (elementArray) => 
-            <tr>
+        return this.data.map( (elementArray) =>
+            // Все работает если только нету одинаковых городов
+            <tr key={elementArray.key}>
                 <th>{elementArray.name}</th>
                 <th className="anim">{Math.round(elementArray.temp) - 273}&#176;</th>
                 <th>
-                    <ButtonSend 
+                    <ButtonSend
+                        // key={elementArray.id}
                         className="upButton" 
                         valueButton="Вверх" 
                         clickButton={this.up}
                     />
                 </th>
                 <th>
-                    <ButtonSend 
+                    <ButtonSend
+                        // key={elementArray.id}
                         className="downButton" 
                         valueButton="Вниз" 
                         clickButton={this.down}
@@ -57,58 +65,53 @@ class Store {
                 </th>
                 <th>
                     <ButtonSend
+                        // key={elementArray.id}
                         className="modalUseDelete" 
                         valueButton="Удалить" 
                         clickButton={this.modalOpen}
                     />
-                    <ButtonSend 
+                    <ButtonSend
+                        // key={elementArray.id}
                         className="modalUseReturn" 
                         valueButton="Восстановить" 
                         clickButton={this.returnActive}
                     />
                 </th>
-                <Modal nameCity={elementArray.name}/>
+                <Modal key={elementArray.key} nameCity={elementArray.name}/>
             </tr>
         );
     };
     // Закрывает модальное окно 
     @action modalClose = (e) => {
+        e.preventDefault();
         if (e.target === document.querySelector('.modal') || e.target === document.querySelector('.modalClose')) document.querySelector('.modal').style.display = 'none';
     }; 
     // Открывает моадльное окно
     @action modalOpen = (e) => {
         e.preventDefault();
-        if (e.target === document.querySelector('.modalUseDelete')) document.querySelector('.modal').style.display = 'block';
+        document.querySelector('.modal').style.display = 'block';
     };
     // Перемещение по таблице вверх
     @action up = (e) => {
-        if (this.data.length === 1) {
+        e.preventDefault();
+        if (this.data.length === 2) {
             return console.log('1');
-        } else if (this.data.length > 1) {
-            for (let i = 0; i < this.data.length - 1; i++) {
-                return ( i !== 0) ? alert("Выше некуда") : this.data.unshift(this.data.pop());
-            }
-            // return this.data.unshift(this.data.pop());
+        } else if (this.data.length >= 3) {
+            this.data.push(this.data.shift());
         }
-        console.log(this.data.length)
     }
     // Перемещение по таблице вниз
     @action down = (e) => {
-        if (this.data.length === 1) {
+        e.preventDefault();
+        if (this.data.length === 2) {
             return console.log('1');
-        } else if (this.data.length > 1) {
-            // Возвращает длину массива 
-            for (let i = 0; i < this.data.length - 1; i++) {
-                return ( i !== this.data.length - 1) ? alert("Выше некуда") : this.data.unshift(this.data.pop());
-            }
-            // return (this.data[this.data.length - 1]) ? alert("Ниже некуда") : this.data.unshift(this.data.pop());
-            // return console.log(this.data.unshift(this.data.pop()));
+        } else if (this.data.length >= 3) {
+            this.data.unshift(this.data.pop());
         }
-        console.log(this.data.length)
     };
     // Изменяет состояние инпута 
     @action handleDataInput = (e) => {
-        console.log(this.inputValue)
+        e.preventDefault();
         return this.inputValue = e.target.value;
     };
     //  При нажатии нa enter
@@ -124,12 +127,10 @@ class Store {
         /* Через библу axios попроще, потому что просто приходит объект */
         await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.inputValue}&appid=bcd470ab4ddba97b244ed20fafeb41a7`)    
             .then( res => {
-                // чтобы создавать каждый раз запрос, можно создвавать ему уникальное имя (без mobx)
-                console.log(this.nameCountry, this.temp)
-                this.result = res.data;
-                // this.nameCountry = res.data.name;
-                // this.temp = res.data.main.temp
-                this.data.push({name: res.data.name, temp: res.data.main.temp})
+                runInAction( () => {
+                    this.result = res.data;
+                    this.data.push({id: res.data.id, key: this.id++, name: res.data.name, temp: res.data.main.temp})
+                })
                 console.log(this.data)
                 console.log(res.data);
                 // console.log(this.nameCountry, this.temp);
@@ -139,6 +140,7 @@ class Store {
                 // handle error
                 return console.log("Response errror" + error);
             })
+        
         document.querySelector('.formSendCoutry').reset();
     };
 
