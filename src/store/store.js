@@ -2,7 +2,6 @@ import React from 'react';
 import { action, extendObservable, computed, runInAction} from "mobx";
 import axios from 'axios';
 import ButtonSend from '../components/MainSection/ButtonSend/ButtonSend';
-import Modal from '../components/MainSection/Modal/Modal';
 // import { element } from 'prop-types';
 class Store {
     // Наблюдаемые данные
@@ -18,6 +17,10 @@ class Store {
             },
         })
     }
+    // randomInteger = (min, max) => {
+    //     let rand = min - 0.5 + Math.random() * (max - min + 1);
+    //     return Math.round(rand);
+    // };
     // Отображение таб "Активные"
     @action returnActive = (e) => {
         e.preventDefault();
@@ -37,47 +40,59 @@ class Store {
     };
     // Отображение в таб "все"
     @computed get addTabsCityAll () {
-        return this.data.map( (elementArray) => <p>{elementArray.name}</p>);
+        return this.data.map( (elementArray) => <p  key={Math.round(Math.random())}>{elementArray.name}</p>);
     }
     // Рендерит строку таблицы 
     @computed get addDataTable () {
+        const randomInteger = (min, max) => {
+            // получить случайное число от (min-0.5) до (max+0.5)
+            let rand = min - 0.5 + Math.random() * (max - min + 1);
+            return Math.round(rand);
+          }
+          console.log(randomInteger(1, 10))
         // Проверять на повтор (если вводитсья второй раз москва, то выводиться город уже ввелся)
         return this.data.map( (elementArray) =>
             // Все работает если только нету одинаковых городов
-            <tr key={elementArray.key}>
+            <tr key={elementArray.key} id={elementArray.key}>
                 <th>{elementArray.name}</th>
                 <th className="anim">{Math.round(elementArray.temp) - 273}&#176;</th>
-                <th>
-                    <ButtonSend
-                        // key={elementArray.id}
-                        className="upButton" 
+                <th key="18">
+                    <button  className="upButton" onClick={this.up}>Вверх</button>
+                    {/* <ButtonSend
+                        // key={this.randomInteger(1, 100000)}
+                        upButton
                         valueButton="Вверх" 
                         clickButton={this.up}
-                    />
+                    /> */}
                 </th>
-                <th>
-                    <ButtonSend
-                        // key={elementArray.id}
-                        className="downButton" 
+                <th key="29">
+                    <button  className="downButton" onClick={this.down}>Вниз</button>
+                    {/* <ButtonSend
+                        // key={this.randomInteger(1, 100000)}
+                        downButton
                         valueButton="Вниз" 
                         clickButton={this.down}
-                    />
+                    /> */}
                 </th>
-                <th>
-                    <ButtonSend
-                        // key={elementArray.id}
-                        className="modalUseDelete" 
+                <th key="50">
+                    <button  className="modalUseDelete" onClick={this.modalOpen}>Удалить</button>
+                    {/* <ButtonSend
+                        // key={this.randomInteger(1, 100000)}
+                        modalUseDelete 
                         valueButton="Удалить" 
                         clickButton={this.modalOpen}
                     />
                     <ButtonSend
-                        // key={elementArray.id}
-                        className="modalUseReturn" 
+                        // key={this.randomInteger(1, 100000)}
+                        modalUseReturn
                         valueButton="Восстановить" 
                         clickButton={this.returnActive}
-                    />
+                    /> */}
                 </th>
-                <Modal key={elementArray.key} nameCity={elementArray.name}/>
+                <th key="431">
+                    <button  className="modalUseReturn" onClick={this.returnActive}>Восстановить</button>
+                </th>
+                {/* <Modal key={elementArray.key} nameCity={elementArray.name}/> */}
             </tr>
         );
     };

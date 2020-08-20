@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'mobx-react';
@@ -20,11 +20,13 @@ const stores = {
 };
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Provider {...stores}>
-      <WidgetWeather />
-    </Provider>
-  </BrowserRouter>,
+  <StrictMode>
+    <BrowserRouter>
+      <Provider {...stores}>
+        <WidgetWeather />
+      </Provider>
+    </BrowserRouter>
+  </StrictMode>,
 
   document.getElementById('root')
 );

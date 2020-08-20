@@ -13,16 +13,16 @@ class Tabs extends Component {
             // Сделать их по отдельности или меняться в зависимости от пропса
             <div className={style.tabs} name="tabs">
                 <NavLink to="/all" className={style.tabsNav}>
-                    <input type="radio" value="" className={style.tabsBtn} checked/>
-                    <label for={style.tabsBtn}>All</label>
+                    <input type="radio" defaultValue="" className={style.tabsBtn} defaultChecked/>
+                    <label htmlFor="">All</label>
                 </NavLink>
                 <NavLink to="/active" className={style.tabsNav}>
-                    <input type="radio" value="" className={style.tabsBtn} />
-                    <label for={style.tabsBtn}>Active</label>
+                    <input type="radio" defaultValue="" className={style.tabsBtn} />
+                    <label htmlFor="">Active</label>
                 </NavLink>
                 <NavLink to="/deleted" className={style.tabsNav}>
-                    <input type="radio" value="" className={style.tabsBtn} />
-                    <label for={style.tabsBtn}>Deleted</label>
+                    <input type="radio" defaultValue="" className={style.tabsBtn} />
+                    <label htmlFor="">Deleted</label>
                 </NavLink>
                 {/* <div> */}
                 <Route path="/all">

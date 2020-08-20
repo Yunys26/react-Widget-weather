@@ -6,6 +6,7 @@ import Table from '../Table/Table';
 import Tabs from '../Tabs/Tabs';
 import { observer } from 'mobx-react';
 import store from '../../../store/store';
+import Modal from '../Modal/Modal';
 
 @observer
 class MainForm extends Component {
@@ -22,18 +23,18 @@ class MainForm extends Component {
                         type="text" 
                         placeholder="Enter your city..."
                     />
-                    <ButtonSend className="buttonSend" valueButton="Send"/>
+                    <ButtonSend buttonSend valueButton="Send"/>
                 </form>
                 <div className="main__table" name="table">
                     <Table
                         // dataApi={store.result}
                     />
                 </div>
-
-                <Tabs />
+                <Tabs/>
+                <Modal/>
             </div>
         );
     };
 }
 
-export default observer(MainForm);
+export default MainForm;

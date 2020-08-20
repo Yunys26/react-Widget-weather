@@ -8,7 +8,7 @@ class Input extends Component {
     render () {
         const props = this.props
         return (
-            <input onChange={props.onChange} value={props.text} name={props.name} type={props.type} placeholder={props.placeholder}/>
+            <input onChange={props.onChange} defaultValue={props.text} name={props.name} type={props.type} placeholder={props.placeholder}/>
         );
     }
 }
