@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import store from '../../store/store';
-import ButtonSend from './ButtonSend';
+import ButtonSend from '../MainSection/ButtonSend';
 
 @observer
 class Modal extends Component {
 
     render () {
+        const props = this.props;
         return (
             <div onClick={store.modalClose} className="modal">
                 <div className="modalContent">
@@ -20,7 +21,7 @@ class Modal extends Component {
                     </div>
                     <div className="modalFooter">
                         {/* <h3>Футер модального окна</h3> */}
-                        <ButtonSend clickButton={store.deleteCity} className="buttonDelete" valueButton="Удалить город"/>
+                        <ButtonSend clickButton={props.clickButton} className="buttonDelete" valueButton="Удалить город"/>
                     </div>
                 </div>
             </div>

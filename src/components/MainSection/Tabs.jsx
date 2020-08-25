@@ -30,12 +30,12 @@ class Tabs extends Component {
                 </Route>
                 <Route path="/active">
                     <div className="tabsContentActive">
-                        Active
+                        {store.addTabsActive}
                     </div>
                 </Route>
                 <Route path="/deleted">
                     <div className="tabsContentDeleted">
-                        Deleted
+                        {store.addTabsDelete}
                     </div>
                 </Route>
             </div>

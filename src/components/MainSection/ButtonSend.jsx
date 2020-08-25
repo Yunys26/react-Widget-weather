@@ -4,11 +4,6 @@ import { observer } from 'mobx-react';
 
 @observer
 class ButtonSend extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    };
     render() {
         const props = this.props;
         return (
@@ -20,7 +15,7 @@ class ButtonSend extends Component {
                     modalUseDelete: props.modalUseDelete,
                     modalUseReturn: props.modalUseReturn,
                 })}>
-                {this.props.valueButton}
+                {props.valueButton}
             </button>
         );
     };

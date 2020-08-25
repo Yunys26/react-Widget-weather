@@ -2,7 +2,7 @@ import React from 'react';
 import { action, extendObservable, computed, runInAction } from "mobx";
 import axios from 'axios';
 import ButtonSend from '../components/MainSection/ButtonSend';
-// import { element } from 'prop-types';
+import Modal from '../components/MainSection/Modal';
 class Store {
     // Наблюдаемые данные
     constructor() {
@@ -15,29 +15,21 @@ class Store {
                 // true: buttonDel, false:
                 buttonOn: true
             },
+            tabsDeleteCity: [],
+            tabsActiveCity: [],
         })
     }
-
-    // Отображение таб "Активные"
-    @action returnActive = (e) => {
-        e.preventDefault();
-        // В активных отображается все города котоыре не были удалены в копии массива, если удаляет возвращается на то же место либо доавляется в конец 
-        console.log("Восстановлен");
-        document.querySelector('.modalUseDelete').style.display = 'block';
-        document.querySelector('.modalUseReturn').style.display = 'none';
-    };
-    // Отображение таб "Удаленные"
-    @action deleteCity = (e) => {
-        e.preventDefault();
-        // удляет по клику делает копию массива и удаляет данные элемент по назваани города из массив в котором объекты
-        console.log("Удален");
-        document.querySelector('.modalUseDelete').style.display = 'none';
-        document.querySelector('.modalUseReturn').style.display = 'block';
-        document.querySelector('.modal').style.display = 'none';
-    };
+    // Отображение в таб "все"
+    @computed get addTabsActive() {
+        return this.tabsActiveCity.map( ( elementArray, index ) => <p key={index}>{elementArray.cityList}</p> );
+    }
+    // Отображение в таб "все"
+    @computed get addTabsDelete () {
+        return this.tabsDeleteCity.map( ( elementArray, index ) => <p key={index}>{elementArray.cityList}</p> );
+    }
     // Отображение в таб "все"
     @computed get addTabsCityAll() {
-        return this.data.map((elementArray) => <p key={Math.round(Math.random())}>{elementArray.name}</p>);
+        return this.data.map( (elementArray, index) => <p key={index}>{elementArray.name}</p> );
     }
     // Рендерит строку таблицы 
     @computed get addDataTable() {
@@ -64,42 +56,52 @@ class Store {
                 <th key={elementArray.key}>
                     <ButtonSend
                         modalUseDelete
-                        key={elementArray.key}
                         valueButton="Удалить"
                         clickButton={this.modalOpen}
                     />
                     <ButtonSend
                         modalUseReturn
-                        key={elementArray.key}
                         valueButton="Восстановить"
-                        clickButton={this.returnActive}
+                        clickButton={this.returnActive.bind(this, elementArray.name)}
                     />
                     {/* <button className="modalUseDelete" onClick={this.modalOpen}>Удалить</button>
                     <button className="modalUseReturn" onClick={this.returnActive}>Восстановить</button> */}
                 </th>
-
+                <Modal
+                    nameCity={elementArray.name}
+                    clickButton={this.deleteCity.bind(this, elementArray.name)}
+                />
             </tr>
         );
     };
-    // @action modalClose = (e) => {
-    //     e.preventDefault();
-    // }
-    // @action modalOpen = (e) => {
-    //     e.preventDefault();
-    // }
+
+    // Отображение таб "Активные"
+    @action returnActive = (name) => {
+        // В активных отображается все города котоыре не были удалены в копии массива, если удаляет возвращается на то же место либо доавляется в конец 
+        // console.log("Восстановлен");
+        this.tabsActiveCity.push({cityList: name});
+        document.querySelector('.modalUseDelete').style.display = 'block';
+        document.querySelector('.modalUseReturn').style.display = 'none';
+    };
+    // Отображение таб "Удаленные"
+    @action deleteCity = (name) => {
+        // удляет по клику делает копию массива и удаляет данные элемент по назваани города из массив в котором объекты
+        // console.log("Удален");
+        this.tabsDeleteCity.push({cityList: name});
+        document.querySelector('.modalUseDelete').style.display = 'none';
+        document.querySelector('.modalUseReturn').style.display = 'block';
+        document.querySelector('.modal').style.display = 'none';
+    };
     // // Закрывает модальное окно 
-    @action modalClose = (e) => {
-        e.preventDefault();
+    modalClose = (e) => {
         if (e.target === document.querySelector('.modal') || e.target === document.querySelector('.modalClose')) document.querySelector('.modal').style.display = 'none';
     };
     // Открывает моадльное окно
-    @action modalOpen = (e) => {
-        e.preventDefault();
+    modalOpen = () => {
         document.querySelector('.modal').style.display = 'block';
     };
     // Перемещение по таблице вверх
-    @action up = (e) => {
-        e.preventDefault();
+    @action up = () => {
         if (this.data.length === 2) {
             return console.log('1');
         } else if (this.data.length >= 3) {
@@ -107,8 +109,7 @@ class Store {
         }
     }
     // Перемещение по таблице вниз
-    @action down = (e) => {
-        e.preventDefault();
+    @action down = () => {
         if (this.data.length === 2) {
             return console.log('1');
         } else if (this.data.length >= 3) {
@@ -117,12 +118,10 @@ class Store {
     };
     // Изменяет состояние инпута 
     @action handleDataInput = (e) => {
-        e.preventDefault();
         return this.inputValue = e.target.value;
     };
     //  При нажатии нa enter
     @action handleKeyPress = (e) => {
-        e.preventDefault();
         if (e.key === "Enter") return this.formSendCoutry();
     };
 
@@ -135,7 +134,7 @@ class Store {
             .then(res => {
                 runInAction(() => {
                     this.result = res.data;
-                    this.data.push({ id: res.data.id, key: `${this.id++}`, name: res.data.name, temp: res.data.main.temp })
+                    this.data.push( { id: res.data.id, key: `${this.id++}`, name: res.data.name, temp: res.data.main.temp } )
                 })
                 console.log(this.data)
                 console.log(res.data);
