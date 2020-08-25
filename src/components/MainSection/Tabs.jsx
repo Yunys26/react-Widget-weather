@@ -1,46 +1,43 @@
 import React, { Component } from 'react';
-import style from './style-tabs.module.css';
 import { NavLink, Route } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import store from '../../../store/store';
+import store from '../../store/store';
 
 class Tabs extends Component {
-    // console.log(style)
     
     render () {
         return (
             // Додумать как табсы будут отображться при роутинге на компоненты
             // Сделать их по отдельности или меняться в зависимости от пропса
-            <div className={style.tabs} name="tabs">
-                <NavLink to="/all" className={style.tabsNav}>
-                    <input type="radio" defaultValue="" className={style.tabsBtn} defaultChecked/>
+            <div className="tabs" name="tabs">
+                <NavLink to="/all" className="tabsNav">
+                    <input type="radio" defaultValue="" className="tabsBt" defaultChecked/>
                     <label htmlFor="">All</label>
                 </NavLink>
-                <NavLink to="/active" className={style.tabsNav}>
-                    <input type="radio" defaultValue="" className={style.tabsBtn} />
+                <NavLink to="/active" className="tabsNav">
+                    <input type="radio" defaultValue="" className="tabsBt" />
                     <label htmlFor="">Active</label>
                 </NavLink>
-                <NavLink to="/deleted" className={style.tabsNav}>
-                    <input type="radio" defaultValue="" className={style.tabsBtn} />
+                <NavLink to="/deleted" className="tabsNav">
+                    <input type="radio" defaultValue="" className="tabsBt" />
                     <label htmlFor="">Deleted</label>
                 </NavLink>
                 {/* <div> */}
                 <Route path="/all">
-                    <div className={style.tabsСontentAll}>
+                    <div className="tabsСontentAll">
                         {store.addTabsCityAll}
                     </div>
                 </Route>
                 <Route path="/active">
-                    <div className={style.tabsContentActive}>
+                    <div className="tabsContentActive">
                         Active
                     </div>
                 </Route>
                 <Route path="/deleted">
-                    <div className={style.tabsContentDeleted}>
+                    <div className="tabsContentDeleted">
                         Deleted
                     </div>
                 </Route>
-                {/* </div> */}
             </div>
         );
     };

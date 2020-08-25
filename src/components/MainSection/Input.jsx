@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './style-input.css';
 import { observer } from 'mobx-react';
 // import store from '../../../store/store';
 

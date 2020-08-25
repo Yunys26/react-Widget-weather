@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-// Библиотека для проверки данных на тип
-// import PropTypes from 'prop-types';
-import './style-table.module.css';
-import store from '../../../store/store';
+import store from '../../store/store';
 import { observer } from 'mobx-react';
 
 

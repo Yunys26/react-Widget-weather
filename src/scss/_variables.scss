@@ -1,0 +1,5 @@
+/* functions */
+@function remX ($px) {
+    $result: ($px * 1px / 16px) * 1rem;
+    @return $result;
+}

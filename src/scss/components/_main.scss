@@ -1,0 +1,70 @@
+@import 'variables';
+
+@import 'mainStyle/tabs';
+@import 'mainStyle/modal';
+@import 'mainStyle/button';
+.main {
+    height: auto;
+    padding-top: 5%;
+    border: 25px;
+
+    form {
+        text-align: center;
+        margin-bottom: 3rem;
+        // Стили компонента <Input>
+        input {
+            font-size: 13px ;
+            width: 20%;
+            height: 3rem;
+            padding: 0.5rem;
+            border-radius: 20px;
+            border: #c5d7d9;
+            box-shadow: 0 3px 0 rgba(154, 147, 140, 0.5);
+            font-size: 1em;
+        }
+        // Стили компонента <ButtonSend>
+    }
+    // Стили компонента <Table>
+    .main__table {
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        table {
+            font-weight: bold;
+            font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+            text-align: left;
+            border-collapse: separate;
+            border-spacing: 5px;
+            background: #ECE9E0;
+            color: #656665;
+            border: 16px solid #ECE9E0;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            transition: 1.5s;
+        }
+        table:hover { 
+            transition: 1.5s;
+            color: #ffffff;
+            border: 16px solid #2a5d68;
+            background-color: #2a5d68;  
+        }
+        th {
+            text-align: center;
+            font-size: 18px;
+            padding: 10px;
+        }
+        img {
+            width: 6rem;
+            height: 6rem;
+        }
+        tr {
+            text-align: center;
+            padding: 10px;
+            /* background: #F5D7BF; */
+        } 
+        tr > button {
+            background-color: red;
+        }
+    }
+}

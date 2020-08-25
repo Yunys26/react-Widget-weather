@@ -2,21 +2,14 @@ import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'mobx-react';
-import './index.css';
+import './scss/app.scss';
 import WidgetWeather from './WidgetWeather';
 import * as serviceWorker from './serviceWorker';
 import store from './store/store';
-import mainStore from './store/mainStore';
-import optionalStore from './store/optionalStore';
+
 
 const stores = {
   store,
-  mainStore,
-  optionalStore,
-  ButtonStore : mainStore.ButtonStore,
-  InputStore : mainStore.InputStore,
-  TableStore : mainStore.TableStore,
-  TabsStore : mainStore.TabsStore,
 };
 
 ReactDOM.render(

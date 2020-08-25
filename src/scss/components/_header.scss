@@ -1,0 +1,56 @@
+@import 'variables';
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 20px;
+    margin-top: 1rem;
+    transition: 1.5s;
+    .header__logo {
+        width: 100px;
+        height: 100px;
+    }
+    .header__list {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        div {
+            width: 150px;
+            height: 53px;
+            border-radius: 20%;
+            padding: 1rem;
+            margin-right: 2rem;
+            
+            text-align: center;
+        }
+        div:last-child {
+            margin-right: 0;
+        }
+        div:last-child {
+            margin-right: 0;
+        }
+        div:hover {
+            border: 1px solid #2a5d68;
+            background-color: aliceblue;
+            box-shadow: 2px 2px 5px rgba(154, 147, 140, 0.5), 1px 1px 5px rgba(255, 255, 255, 1);
+            box-shadow: inset;
+            transition: 1s;
+        }
+    }
+}
+.header:hover {
+    margin-left: 25%;
+    margin-right: 25%;
+    transition: 1.5s;
+    background-color: #2a5d68;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border: 0.5px solid #ffffff;
+}
+
+
+

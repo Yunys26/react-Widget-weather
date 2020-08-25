@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import './style-MainSection.css';
-import MainForm from './MainForm/MainForm';
+import MainForm from './MainSection/MainForm';
 
 class MainSection extends Component {
     constructor () {
@@ -19,7 +18,7 @@ class MainSection extends Component {
                     <img src={'./iconMain/storm.svg'} alt=""></img>
                     <img src={'./iconMain/sun.svg'} alt=""></img> */}
                 </div>
-                <MainForm/>
+                <MainForm />
             </main>
         );
     }

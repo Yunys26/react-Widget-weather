@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import './style-modal.css';
-import store from '../../../store/store';
-import ButtonSend from '../ButtonSend/ButtonSend';
+import store from '../../store/store';
+import ButtonSend from './ButtonSend';
 
 @observer
 class Modal extends Component {

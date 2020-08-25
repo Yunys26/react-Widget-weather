@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './style-main-form.css';
-import Input from '../Input/Input';
-import ButtonSend from '../ButtonSend/ButtonSend';
-import Table from '../Table/Table';
-import Tabs from '../Tabs/Tabs';
 import { observer } from 'mobx-react';
-import store from '../../../store/store';
-import Modal from '../Modal/Modal';
+import store from '../../store/store';
+import Input from './Input';
+import ButtonSend from './ButtonSend';
+import Table from './Table';
+import Tabs from './Tabs';
+import Modal from './Modal';
+
 
 @observer
 class MainForm extends Component {

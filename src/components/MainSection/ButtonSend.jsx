@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import './style-button.css'
+import { observer } from 'mobx-react';
+
+@observer
 class ButtonSend extends Component {
     constructor(props) {
         super(props);
@@ -8,9 +10,9 @@ class ButtonSend extends Component {
         };
     };
     render() {
-        const props = this.props
+        const props = this.props;
         return (
-            <button onClick={this.props.clickButton}
+            <button onClick={props.clickButton}
                 className={classNames('button', {
                     buttonSend: props.buttonSend,
                     upButton: props.upButton,
@@ -19,7 +21,7 @@ class ButtonSend extends Component {
                     modalUseReturn: props.modalUseReturn,
                 })}>
                 {this.props.valueButton}
-                </button>
+            </button>
         );
     };
 }
