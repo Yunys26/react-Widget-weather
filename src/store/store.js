@@ -1,5 +1,5 @@
 import React from 'react';
-import { action, extendObservable, computed, runInAction } from "mobx";
+import { action, extendObservable, runInAction } from "mobx";
 import axios from 'axios';
 import ButtonSend from '../components/MainSection/ButtonSend';
 import Modal from '../components/MainSection/Modal';
@@ -11,38 +11,39 @@ class Store {
             result: null,
             id: 0,
             data: [],
-            objStyles: {
-                // true: buttonDel, false:
-                buttonOn: true
-            },
             tabsDeleteCity: [],
             tabsActiveCity: [],
+            // objStyles: {
+            //     // true: buttonDel, false:
+            //     buttonOn: true
+            // },
         })
     }
     // Отображение в таб "все"
-    @computed get addTabsActive() {
+    get addTabsActive() {
         return this.tabsActiveCity.map( ( elementArray, index ) => <p key={index}>{elementArray.cityList}</p> );
     }
     // Отображение в таб "все"
-    @computed get addTabsDelete () {
+    get addTabsDelete () {
         return this.tabsDeleteCity.map( ( elementArray, index ) => <p key={index}>{elementArray.cityList}</p> );
     }
     // Отображение в таб "все"
-    @computed get addTabsCityAll() {
+    get addTabsCityAll() {
         return this.data.map( (elementArray, index) => <p key={index}>{elementArray.name}</p> );
     }
     // Рендерит строку таблицы 
-    @computed get addDataTable() {
+    get addDataTable() {
         return this.data.map((elementArray, index) =>
             <tr key={elementArray.key} id={elementArray.key}>
                 <th>{elementArray.name}</th>
                 <th className="anim">{Math.round(elementArray.temp) - 273}&#176;</th>
                 <th>
                     {/* <button className="upButton" onClick={this.up}>Вверх</button> */}
-                    <ButtonSend
+                    <ButtonSend 
+                        id={`upButton${elementArray.key}`}
                         upButton
                         valueButton="Вверх"
-                        clickButton={this.up}
+                        clickButton={this.up.bind(this, elementArray.name)}
                     />
                 </th>
                 <th>
@@ -79,15 +80,21 @@ class Store {
     @action returnActive = (name) => {
         // В активных отображается все города котоыре не были удалены в копии массива, если удаляет возвращается на то же место либо доавляется в конец 
         // console.log("Восстановлен");
+        // this.tabsDeleteCity.splice(i, 1)
+        // if (this.tabsActiveCity)
         this.tabsActiveCity.push({cityList: name});
+        for (let i = 0; i < this.tabsDeleteCity.length; i++) {
+            if (this.tabsDeleteCity[i].cityList === name) this.tabsDeleteCity.splice(i, 1);
+        }
         document.querySelector('.modalUseDelete').style.display = 'block';
         document.querySelector('.modalUseReturn').style.display = 'none';
     };
     // Отображение таб "Удаленные"
     @action deleteCity = (name) => {
-        // удляет по клику делает копию массива и удаляет данные элемент по назваани города из массив в котором объекты
-        // console.log("Удален");
         this.tabsDeleteCity.push({cityList: name});
+        for (let i = 0; i < this.tabsActiveCity.length; i++) {
+            if (this.tabsActiveCity[i].cityList === name) this.tabsActiveCity.splice(i, 1);
+        }
         document.querySelector('.modalUseDelete').style.display = 'none';
         document.querySelector('.modalUseReturn').style.display = 'block';
         document.querySelector('.modal').style.display = 'none';
@@ -101,12 +108,47 @@ class Store {
         document.querySelector('.modal').style.display = 'block';
     };
     // Перемещение по таблице вверх
-    @action up = () => {
+    @action up = (name, e) => {
+        // если таргерт равен id то что то выводит
+        // for (let key = 0; key < this.data.length - 1; key++) {
+        //     if (e.target = document.getElementById(`upButton ${key}`)) console.log(1);
+        // }
+        // this.data.filter( function(item, index) {
+        //     return console.log(item);
+        // } );
+        // this.data.forEach( (element, index) => {
+        //     if (index > 1 && index < this.data.length) {
+        //         console.log("yes")
+        //     }
+        // });
+        // if (this.data['0']) {
+        //     console.log(1);
+        // } else if ( this.data[`${this.data.length - 1}`] ) {
+        //     console.log(2);
+        // }
+        // for (let i = 0; i < this.data.length - 1; i++) {
+
+
+        // }
+
+        // for (let i = 0; i < this.data.length - 1; i++) {
+        //     if (this.data[0].key === `${this.data[i].key}`) console.log(1);
+        //     if (this.data[i].key === ( this.data.length - (this.data.length - 1) )) console.log(2);
+        //     if (this.data[this.data.length - 1].key === `${this.data[i]}`) console.log(3)
+        //     // if (e.target === document.getElementById('upButton0')) console.log(1);
+        // }
+
+        // console.log(e.target)
+        // console.log(document.getElementById('upButton0'))
+        // console.log(this.data)
+        // return (this.data[0]) ? console.log(1) : (this.data[this.data.lenght - 1]) ? console.log(2) : this.data.push(this.data.shift());
         if (this.data.length === 2) {
             return console.log('1');
         } else if (this.data.length >= 3) {
             this.data.push(this.data.shift());
         }
+        // if (this.data[0]) console.log(1);
+        // if (this.data)
     }
     // Перемещение по таблице вниз
     @action down = () => {

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import MainForm from './MainSection/MainForm';
+import { observer } from 'mobx-react';
 
+@observer
 class MainSection extends Component {
     constructor () {
         super();

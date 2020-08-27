@@ -7,7 +7,9 @@ class ButtonSend extends Component {
     render() {
         const props = this.props;
         return (
-            <button onClick={props.clickButton}
+            <button
+                id={props.id}
+                onClick={props.clickButton}
                 className={classNames('button', {
                     buttonSend: props.buttonSend,
                     upButton: props.upButton,

@@ -3,6 +3,7 @@ import { NavLink, Route } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import store from '../../store/store';
 
+@observer
 class Tabs extends Component {
     
     render () {
