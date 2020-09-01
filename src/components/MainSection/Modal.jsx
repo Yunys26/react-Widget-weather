@@ -12,7 +12,7 @@ class Modal extends Component {
             <div onClick={store.modalClose} className="modal">
                 <div className="modalContent">
                     <div className="modalHeader">
-                        <span onClick={store.onClick} className="modalClose">&times;</span>
+                        <span className="modalClose">&times;</span>
                         <img className="sadSunImg" src="https://img.icons8.com/clouds/100/000000/sad-sun.png" alt=""/>
                     </div>
                     <div className="modalBody">

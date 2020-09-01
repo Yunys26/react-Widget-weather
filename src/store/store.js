@@ -2,7 +2,6 @@ import React from 'react';
 import { action, extendObservable, runInAction } from "mobx";
 import axios from 'axios';
 import ButtonSend from '../components/MainSection/ButtonSend';
-import Modal from '../components/MainSection/Modal';
 class Store {
     // Наблюдаемые данные
     constructor() {
@@ -13,17 +12,13 @@ class Store {
             data: [],
             tabsDeleteCity: [],
             tabsActiveCity: [],
-            // objStyles: {
-            //     // true: buttonDel, false:
-            //     buttonOn: true
-            // },
         })
     }
-    // Отображение в таб "все"
+    // Отображение в таб "Active"
     get addTabsActive() {
         return this.tabsActiveCity.map( ( elementArray, index ) => <p key={index}>{elementArray.cityList}</p> );
     }
-    // Отображение в таб "все"
+    // Отображение в таб "Delete"
     get addTabsDelete () {
         return this.tabsDeleteCity.map( ( elementArray, index ) => <p key={index}>{elementArray.cityList}</p> );
     }
@@ -34,12 +29,12 @@ class Store {
     // Рендерит строку таблицы 
     get addDataTable() {
         return this.data.map((elementArray, index) =>
-            <tr key={elementArray.key} id={elementArray.key}>
-                <th>{elementArray.name}</th>
+            <tr onClick={this.dataСhangeClickRow.bind(this, elementArray.name)} key={elementArray.key} id={elementArray.key}>
+                <th className="cityName">{elementArray.name}</th>
                 <th className="anim">{Math.round(elementArray.temp) - 273}&#176;</th>
                 <th>
                     {/* <button className="upButton" onClick={this.up}>Вверх</button> */}
-                    <ButtonSend 
+                    <ButtonSend
                         id={`upButton${elementArray.key}`}
                         upButton
                         valueButton="Вверх"
@@ -68,20 +63,22 @@ class Store {
                     {/* <button className="modalUseDelete" onClick={this.modalOpen}>Удалить</button>
                     <button className="modalUseReturn" onClick={this.returnActive}>Восстановить</button> */}
                 </th>
-                <Modal
+                {/* <Modal
                     nameCity={elementArray.name}
                     clickButton={this.deleteCity.bind(this, elementArray.name)}
-                />
+                /> */}
             </tr>
         );
     };
-
-    // Отображение таб "Активные"
+    dataСhangeClickRow = (name, e) => {   
+        // if (e.target === document.querySelector('.anim')) console.log(1)
+        if ( e.target === document.querySelector('.anim') || e.target === document.querySelector('.cityName') ) {
+            console.log(1)
+        }
+    }
+    // Отображение таб "Активные", при нажатии на кнопку восстановить
     @action returnActive = (name) => {
         // В активных отображается все города котоыре не были удалены в копии массива, если удаляет возвращается на то же место либо доавляется в конец 
-        // console.log("Восстановлен");
-        // this.tabsDeleteCity.splice(i, 1)
-        // if (this.tabsActiveCity)
         this.tabsActiveCity.push({cityList: name});
         for (let i = 0; i < this.tabsDeleteCity.length; i++) {
             if (this.tabsDeleteCity[i].cityList === name) this.tabsDeleteCity.splice(i, 1);
@@ -89,7 +86,7 @@ class Store {
         document.querySelector('.modalUseDelete').style.display = 'block';
         document.querySelector('.modalUseReturn').style.display = 'none';
     };
-    // Отображение таб "Удаленные"
+    // Отображение таб "Удаленные", при нажати на кнопку "удалить город" в моадльном окне
     @action deleteCity = (name) => {
         this.tabsDeleteCity.push({cityList: name});
         for (let i = 0; i < this.tabsActiveCity.length; i++) {
@@ -104,7 +101,7 @@ class Store {
         if (e.target === document.querySelector('.modal') || e.target === document.querySelector('.modalClose')) document.querySelector('.modal').style.display = 'none';
     };
     // Открывает моадльное окно
-    modalOpen = () => {
+    modalOpen = (e) => {
         document.querySelector('.modal').style.display = 'block';
     };
     // Перемещение по таблице вверх
