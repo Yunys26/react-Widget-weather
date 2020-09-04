@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import ModalLib from 'react-modal';
+// import ModalLib from 'react-modal';
 import store from '../../store/store';
 import Input from './Input';
 import ButtonSend from './ButtonSend';
@@ -31,7 +31,8 @@ class MainForm extends Component {
                         // dataApi={store.result}
                     />
                 </div>
-                <ModalLib/>
+                {store.createModal()}
+                {/* <ModalLib/> */}
                 <Tabs/>
             </div>
         );

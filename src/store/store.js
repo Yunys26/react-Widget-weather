@@ -11,8 +11,12 @@ class Store {
             result: null,
             id: 0,
             data: [],
+            // Tabs Del
             tabsDeleteCity: [],
+            // Tabs Active
             tabsActiveCity: [],
+            // Modal
+            isOpen: false,
         })
     }
     // Отображение в таб "Active"
@@ -30,7 +34,7 @@ class Store {
     // Рендерит строку таблицы 
     get addDataTable() {
         return this.data.map((elementArray, index) =>
-            <tr onClick={this.dataСhangeClickRow.bind(this, elementArray.name)} key={elementArray.key} id={elementArray.key}>
+            <tr onClick={this.modalOpen.bind(this, elementArray.name, index)} key={elementArray.key} id={elementArray.key}>
                 <th className="cityName">{elementArray.name}</th>
                 <th className="anim">{Math.round(elementArray.temp) - 273}&#176;</th>
                 <th>
@@ -51,12 +55,12 @@ class Store {
                         clickButton={this.down.bind(this, index)}
                     />
                 </th>
-                <th key={elementArray.key + 10}>
+                <th key={elementArray.key}>
                     <ButtonSend
-                        id="openMod"
+                        id={`openMod${index}`}
                         modalUseDelete
                         valueButton="Удалить"
-                        clickButton={this.modalOpen}
+                        clickButton={this.modalOpen.bind(this, elementArray.name, index)}
                     />
                     <ButtonSend
                         id="closeMod"
@@ -67,11 +71,11 @@ class Store {
                     {/* <button className="modalUseDelete" onClick={this.modalOpen}>Удалить</button>
                     <button className="modalUseReturn" onClick={this.returnActive}>Восстановить</button> */}
                 </th>
-                <Modal
+                {/* <Modal
                     key={elementArray.key}
                     nameCity={elementArray.name}
                     clickButton={this.deleteCity.bind(this, elementArray.name)}
-                />
+                /> */}
             </tr>
         );
     };
@@ -88,28 +92,44 @@ class Store {
         for (let i = 0; i < this.tabsDeleteCity.length; i++) {
             if (this.tabsDeleteCity[i].cityList === name) this.tabsDeleteCity.splice(i, 1);
         }
-        document.querySelector('.modalUseDelete').style.display = 'block';
-        document.querySelector('.modalUseReturn').style.display = 'none';
+
     };
     // Отображение таб "Удаленные", при нажати на кнопку "удалить город" в моадльном окне
     @action deleteCity = (name) => {
+        this.isOpen = !this.isOpen;
         this.tabsDeleteCity.push({ cityList: name });
         for (let i = 0; i < this.tabsActiveCity.length; i++) {
             if (this.tabsActiveCity[i].cityList === name) this.tabsActiveCity.splice(i, 1);
         }
-        document.querySelector('.modalUseDelete').style.display = 'none';
-        document.querySelector('.modalUseReturn').style.display = 'block';
-        document.querySelector('.modal').style.display = 'none';
+    };
+    // Логика отображения модального окна
+    @action modalOpen = (name, index, e) => {
+        if (e.target === document.getElementById(`openMod${index}`)) {
+            this.isOpen = true;
+            // this.simpleMet.bind(this, name, index);
+        } else if (e.target === document.querySelector('.anim') || e.target === document.querySelector('.cityName')) this.isOpen = true;
+        // Возвращает если true возвращает компонент, t
+        // console.log(this.isOpen && <Modal />)
+        console.log(this.isOpen)
+        // return <Modal />;
+
     };
     // // Закрывает модальное окно 
-    modalClose = (e) => {
-        if (e.target === document.querySelector('.modal') || e.target === document.querySelector('.modalClose')) document.querySelector('.modal').style.display = 'none';
+    @action modalClose = (e) => {
+        if (e.target === document.querySelector('.modal') || e.target === document.querySelector('.modalClose')) this.isOpen = !this.isOpen; ;
     };
-    // Открывает моадльное окно
-    modalOpen = (e) => {
-        console.log(document.getElementById('0'))
-        document.querySelector('.modal').style.display = 'block';
-    };
+    // get createModal
+    createModal (name, index) {
+        console.log(name)
+        return this.isOpen && <Modal nameCity={name} clickButton={this.deleteCity.bind(this, name)}/>
+    }
+    // Открывает моадльное око
+    // get modalOpen () {
+    //     return this.simpleMet();
+    //     // console.log(document.getElementById('0'))
+    //     // document.querySelector('.modal').style.display = 'block';
+    //     // return this.isOpen && <Modal isOpen={this.handleModal}/>
+    // };
     // Перемещение по таблице вверх
     @action up = (index) => {
         // if (this.data.length === 2) {
@@ -146,7 +166,7 @@ class Store {
             .then(res => {
                 runInAction(() => {
                     this.result = res.data;
-                    this.data.push({ id: res.data.id, key: `${this.id++}`, name: res.data.name, temp: res.data.main.temp })
+                    this.data.push({ key: `${this.id++}`, name: res.data.name, temp: res.data.main.temp })
                 })
                 console.log(this.data)
                 console.log(res.data);
@@ -154,8 +174,12 @@ class Store {
                 // return this.tesData = {name: res.data.name, temp: res.data.main.temp};
             })
             .catch((error) => {
+                if (error.response) {
+                    alert("Не существует такого города");
+                } else if (error.request) {
+                    alert("Данные не отправлены");
+                }
                 // handle error
-                return console.log("Response errror" + error);
             })
 
         document.querySelector('.formSendCoutry').reset();
