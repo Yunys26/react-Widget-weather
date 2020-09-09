@@ -16,7 +16,8 @@ class Store {
             // Tabs Active
             tabsActiveCity: [],
             // Modal
-            isOpen: false,
+            isOpenModalDeleCountry: false,
+            isOpenModalUpdateTable: false,
         })
     }
     // Отображение в таб "Active"
@@ -79,14 +80,10 @@ class Store {
             </tr>
         );
     };
-    dataСhangeClickRow = (name, e) => {
-        // if (e.target === document.querySelector('.anim')) console.log(1)
-        if (e.target === document.querySelector('.anim') || e.target === document.querySelector('.cityName')) {
-            console.log(1)
-        }
-    }
     // Отображение таб "Активные", при нажатии на кнопку восстановить
     @action returnActive = (name) => {
+        document.querySelector('.modalUseDelete').style.display = 'block';
+        document.querySelector('.modalUseReturn').style.display = 'none';
         // В активных отображается все города котоыре не были удалены в копии массива, если удаляет возвращается на то же место либо доавляется в конец 
         this.tabsActiveCity.push({ cityList: name });
         for (let i = 0; i < this.tabsDeleteCity.length; i++) {
@@ -96,7 +93,10 @@ class Store {
     };
     // Отображение таб "Удаленные", при нажати на кнопку "удалить город" в моадльном окне
     @action deleteCity = (name) => {
-        this.isOpen = !this.isOpen;
+        console.log(name)
+        this.isOpenModalDeleCountry = false;
+        document.querySelector('.modalUseDelete').style.display = 'none';
+        document.querySelector('.modalUseReturn').style.display = 'block';
         this.tabsDeleteCity.push({ cityList: name });
         for (let i = 0; i < this.tabsActiveCity.length; i++) {
             if (this.tabsActiveCity[i].cityList === name) this.tabsActiveCity.splice(i, 1);
@@ -105,31 +105,71 @@ class Store {
     // Логика отображения модального окна
     @action modalOpen = (name, index, e) => {
         if (e.target === document.getElementById(`openMod${index}`)) {
-            this.isOpen = true;
+            this.isOpenModalDeleCountry = true;
             // this.simpleMet.bind(this, name, index);
-        } else if (e.target === document.querySelector('.anim') || e.target === document.querySelector('.cityName')) this.isOpen = true;
-        // Возвращает если true возвращает компонент, t
-        // console.log(this.isOpen && <Modal />)
-        console.log(this.isOpen)
+        } else if (e.target === document.querySelector('.anim') || e.target === document.querySelector('.cityName')) this.isOpenModalUpdateTable = true;
+        console.log(this.isOpenModalDeleCountry);
         // return <Modal />;
 
     };
     // // Закрывает модальное окно 
     @action modalClose = (e) => {
-        if (e.target === document.querySelector('.modal') || e.target === document.querySelector('.modalClose')) this.isOpen = !this.isOpen; ;
+        if (e.target === document.querySelector('.modal') || e.target === document.querySelector('.modalClose')) {
+            this.isOpenModalDeleCountry = false;
+            this.isOpenModalUpdateTable = false;
+        }
     };
     // get createModal
-    createModal (name, index) {
-        console.log(name)
-        return this.isOpen && <Modal nameCity={name} clickButton={this.deleteCity.bind(this, name)}/>
+    createModalDeleCountry(city) {
+        // Добавлены имя города и удаление по кнопке
+        console.log(city[0])
+        return (this.isOpenModalDeleCountry &&
+            <Modal>
+                <div onClick={this.modalClose} className="modal">
+                    <div className="modalContent">
+                        <div className="modalHeader">
+                            <span className="modalClose">&times;</span>
+                            <img className="sadSunImg" src="https://img.icons8.com/clouds/100/000000/sad-sun.png" alt="" />
+                        </div>
+                        <div className="modalBody">
+                            <p>Удалить <span>{city[0].name}</span> из списка ?</p>
+                            <p>Ещё другой текст...</p>
+                        </div>
+                        <div className="modalFooter">
+                            <button className="button" onClick={this.deleteCity.bind(this, city[0].name)}>Удалить город</button>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+        );
+        // return this.isOpenModalDeleCountry && <Modal nameCity={city[0].name}  clickButton={this.deleteCity.bind(this, city[0].name)}/>
     }
-    // Открывает моадльное око
-    // get modalOpen () {
-    //     return this.simpleMet();
-    //     // console.log(document.getElementById('0'))
-    //     // document.querySelector('.modal').style.display = 'block';
-    //     // return this.isOpen && <Modal isOpen={this.handleModal}/>
-    // };
+    createModalUpdateTable(dataTable) {
+        return (this.isOpenModalUpdateTable &&
+            <Modal>
+                <div onClick={this.modalClose} className="modal">
+                    <div className="modalContent">
+                        <div className="modalHeader">
+                            <span className="modalClose">&times;</span>
+                            <img className="sadSunImg" src="https://img.icons8.com/clouds/100/000000/sad-sun.png" alt="" />
+                        </div>
+                        <div className="modalBody">
+                            <input defaultValue={dataTable[0].name}/>
+                            <input defaultValue={dataTable[0].temp}/>
+                        </div>
+                        <div className="modalFooter">
+                            {/* <h3>Футер модального окна</h3> */}
+                            <ButtonSend clickButton={this.deleteCity.bind()} className="buttonDelete" valueButton="Удалить город" />
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+        );
+    }
+    // createModal (e, name) {
+    //     console.log(e.target)
+    //     return this.isOpenModalDeleCountry && <Modal nameCity={name} clickButton={this.deleteCity.bind(this, name)}/>
+    // }
     // Перемещение по таблице вверх
     @action up = (index) => {
         // if (this.data.length === 2) {
@@ -181,7 +221,6 @@ class Store {
                 }
                 // handle error
             })
-
         document.querySelector('.formSendCoutry').reset();
     };
 

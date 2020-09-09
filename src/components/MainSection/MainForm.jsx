@@ -6,12 +6,10 @@ import Input from './Input';
 import ButtonSend from './ButtonSend';
 import Table from './Table';
 import Tabs from './Tabs';
-import Modal from './Modal';
 
 
 @observer
 class MainForm extends Component {
-
     render () {
         // console.log(this.state);
         return (
@@ -31,7 +29,8 @@ class MainForm extends Component {
                         // dataApi={store.result}
                     />
                 </div>
-                {store.createModal()}
+                {store.createModalDeleCountry(store.data)}
+                {store.createModalUpdateTable(store.data)}
                 {/* <ModalLib/> */}
                 <Tabs/>
             </div>
