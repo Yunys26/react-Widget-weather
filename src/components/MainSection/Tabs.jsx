@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+// Libs
 import { NavLink, Route } from 'react-router-dom';
 import { observer } from 'mobx-react';
+// Store
 import store from '../../store/store';
 
 @observer

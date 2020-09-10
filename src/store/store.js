@@ -1,14 +1,21 @@
 import React from 'react';
+// Libs
 import { action, extendObservable, runInAction } from "mobx";
 import axios from 'axios';
+// Components
 import ButtonSend from '../components/MainSection/ButtonSend';
 import Modal from '../components/MainSection/Modal';
 class Store {
     // Наблюдаемые данные
     constructor() {
         extendObservable(this, {
+            // inputValue
+            inputValueTemp: '',
+            inputValueCity: '',
             inputValue: '',
+
             result: null,
+
             id: 0,
             data: [],
             // Tabs Del
@@ -114,7 +121,7 @@ class Store {
     };
     // // Закрывает модальное окно 
     @action modalClose = (e) => {
-        if (e.target === document.querySelector('.modal') || e.target === document.querySelector('.modalClose')) {
+        if (e.target === document.querySelector('.modal') || e.target === document.querySelector('.modalClose') || document.querySelector('.buttonAbort')) {
             this.isOpenModalDeleCountry = false;
             this.isOpenModalUpdateTable = false;
         }
@@ -149,27 +156,44 @@ class Store {
             <Modal>
                 <div onClick={this.modalClose} className="modal">
                     <div className="modalContent">
-                        <div className="modalHeader">
-                            <span className="modalClose">&times;</span>
-                            <img className="sadSunImg" src="https://img.icons8.com/clouds/100/000000/sad-sun.png" alt="" />
-                        </div>
-                        <div className="modalBody">
-                            <input defaultValue={dataTable[0].name}/>
-                            <input defaultValue={dataTable[0].temp}/>
-                        </div>
-                        <div className="modalFooter">
-                            {/* <h3>Футер модального окна</h3> */}
-                            <ButtonSend clickButton={this.deleteCity.bind()} className="buttonDelete" valueButton="Удалить город" />
-                        </div>
+                        <from>
+                            <div className="modalHeader">
+                                <span className="modalClose">&times;</span>
+                                <img className="sadSunImg" src="https://img.icons8.com/clouds/100/000000/sad-sun.png" alt="" />
+                            </div>
+                            <div className="modalBodyUpdateTable">
+                                <form>
+                                    {/* <Input
+                                    inputValueCity
+                                    // onChange={store.handleDataInput}
+                                    value={}
+                                    name="text"
+                                    type="text"
+                                />
+                                <Input
+                                    inputValueTemp
+                                    // onChange={store.handleDataInput}
+                                    value={}
+                                    name="text"
+                                    type="text"
+                                /> */}
+                                    <input onChange={this.handleDataInputCity} className="input inputValueCity" defaultValue={dataTable[0].name} />
+                                    <input onChange={this.handleDataInputTemp} className="input inputValueTemp" defaultValue={Math.round(dataTable[0].temp) - 273} />
+                                </form>
+                            </div>
+                            <div className="modalFooterUpdateTable">
+                                <button className="button" >Сохранить</button>
+                                <button className="button buttonAbort" >Отменить</button>
+                                {/* <h3>Футер модального окна</h3> */}
+                                {/* <button className="button" >Сохранить</button>
+                            <button className="button" >Отменить</button> */}
+                            </div>
+                        </from>
                     </div>
                 </div>
             </Modal>
         );
     }
-    // createModal (e, name) {
-    //     console.log(e.target)
-    //     return this.isOpenModalDeleCountry && <Modal nameCity={name} clickButton={this.deleteCity.bind(this, name)}/>
-    // }
     // Перемещение по таблице вверх
     @action up = (index) => {
         // if (this.data.length === 2) {
@@ -192,11 +216,16 @@ class Store {
     @action handleDataInput = (e) => {
         return this.inputValue = e.target.value;
     };
+    @action handleDataInputTemp = (e) => {
+        this.inputValueTemp = e.target.value;
+    };
+    @action handleDataInputCity = (e) => {
+        this.inputValueCity = e.target.value;
+    };
     //  При нажатии нa enter
     @action handleKeyPress = (e) => {
         if (e.key === "Enter") return this.formSendCoutry();
     };
-
     // Осуществляет запрос на api и получает ответ, при клике на кнопку
     @action formSendCoutry = async (e) => {
         e.preventDefault();
@@ -208,7 +237,7 @@ class Store {
                     this.result = res.data;
                     this.data.push({ key: `${this.id++}`, name: res.data.name, temp: res.data.main.temp })
                 })
-                console.log(this.data)
+                console.log(this.data);
                 console.log(res.data);
                 // console.log(this.nameCountry, this.temp);
                 // return this.tesData = {name: res.data.name, temp: res.data.main.temp};

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+// Libs
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
 
 @observer
 class ButtonSend extends Component {
+    
     render() {
         const props = this.props;
         return (

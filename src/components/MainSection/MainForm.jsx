@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+// Libs
 import { observer } from 'mobx-react';
-// import ModalLib from 'react-modal';
-import store from '../../store/store';
+// Components
 import Input from './Input';
 import ButtonSend from './ButtonSend';
 import Table from './Table';
 import Tabs from './Tabs';
-
+import store from '../../store/store';
 
 @observer
 class MainForm extends Component {
+    
     render () {
         // console.log(this.state);
         return (

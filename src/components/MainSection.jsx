@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import MainForm from './MainSection/MainForm';
+// Libs
 import { observer } from 'mobx-react';
+// Components
+import MainForm from './MainSection/MainForm';
 
 @observer
 class MainSection extends Component {
-    constructor () {
-        super();
-        this.state = {
-        };
-    };
+
     render () {
         return (
             <main className="main">

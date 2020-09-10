@@ -1,12 +1,15 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
+import * as serviceWorker from './serviceWorker';
+// Libs
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'mobx-react';
+// Style
 import './scss/app.scss';
-import WidgetWeather from './WidgetWeather';
-import * as serviceWorker from './serviceWorker';
+// Store
 import store from './store/store';
 
+import WidgetWeather from './WidgetWeather';
 
 const stores = {
   store,

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+// Components
 import Header from './components/Header';
 import MainSection from './components/MainSection';
 import Footer from './components/Footer';

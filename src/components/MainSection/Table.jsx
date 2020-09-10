@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import store from '../../store/store';
+// Libs
 import { observer } from 'mobx-react';
+// Store
+import store from '../../store/store';
+
 
 
 @observer
 class Table extends Component {
+    
     render () {
         // Понять как получить прокси и принять его и записать, или доабвлять в масси и отображать 
         console.log(store.result);
