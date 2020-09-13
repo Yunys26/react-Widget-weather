@@ -44,7 +44,7 @@ class Store {
         return this.data.map((elementArray, index) =>
             <tr onClick={this.modalOpen.bind(this, elementArray.name, index)} key={elementArray.key} id={elementArray.key}>
                 <th className="cityName">{elementArray.name}</th>
-                <th className="anim">{Math.round(elementArray.temp) - 273}&#176;</th>
+                <th className="anim">{elementArray.temp}&#176;</th>
                 <th>
                     {/* <button className="upButton" onClick={this.up}>Вверх</button> */}
                     <ButtonSend
@@ -88,7 +88,7 @@ class Store {
         );
     };
     // Отображение таб "Активные", при нажатии на кнопку восстановить
-    @action returnActive = (name) => {
+    @action('Tabs active') returnActive = (name) => {
         document.querySelector('.modalUseDelete').style.display = 'block';
         document.querySelector('.modalUseReturn').style.display = 'none';
         // В активных отображается все города котоыре не были удалены в копии массива, если удаляет возвращается на то же место либо доавляется в конец 
@@ -99,7 +99,7 @@ class Store {
 
     };
     // Отображение таб "Удаленные", при нажати на кнопку "удалить город" в моадльном окне
-    @action deleteCity = (name) => {
+    @action('Tabs deleted') deleteCity = (name) => {
         console.log(name)
         this.isOpenModalDeleCountry = false;
         document.querySelector('.modalUseDelete').style.display = 'none';
@@ -110,7 +110,7 @@ class Store {
         }
     };
     // Логика отображения модального окна
-    @action modalOpen = (name, index, e) => {
+    @action('Modal click open') modalOpen = (name, index, e) => {
         if (e.target === document.getElementById(`openMod${index}`)) {
             this.isOpenModalDeleCountry = true;
             // this.simpleMet.bind(this, name, index);
@@ -120,11 +120,80 @@ class Store {
 
     };
     // // Закрывает модальное окно 
-    @action modalClose = (e) => {
-        if (e.target === document.querySelector('.modal') || e.target === document.querySelector('.modalClose') || document.querySelector('.buttonAbort')) {
+    @action('Modal close click elem') modalClose = (e) => {
+        if (e.target === document.querySelector('.modal') || e.target === document.querySelector('.modalClose') || e.target === document.querySelector('.buttonAbort')) {
             this.isOpenModalDeleCountry = false;
             this.isOpenModalUpdateTable = false;
         }
+    };
+    // Перемещение по таблице вверх
+    @action('Up dates in a table') up = (index) => {
+        // if (this.data.length === 2) {
+        //     // return console.log('1');
+        // } else if (this.data.length >= 3) {
+        //     this.data.push(this.data.shift());
+        // }
+        return (index === 0) ? console.log(1) : (index === this.data.length - 1 && this.data.length - 1 === 1) ? console.log(0) : this.data.push(this.data.shift());;
+    }
+    // Перемещение по таблице вниз
+    @action('Down dates in a table') down = (index) => {
+        // if (this.data.length === 2) {
+        //     return console.log('1');
+        // } else if (this.data.length >= 3) {
+        //     this.data.unshift(this.data.pop());
+        // }
+        return (index === this.data.length - 1) ? console.log(1) : (index === 0 && this.data.length - 1 === 1) ? console.log(0) : this.data.unshift(this.data.pop());
+    };
+    // Изменяет состояние инпута 
+    @action('Main input send name city') handleDataInput = (e) => {
+        return this.inputValue = e.target.value;
+    };
+    @action('Update modal data temp') handleDataInputTemp = (e) => {
+        this.inputValueTemp = e.target.value;
+        if (this.inputValueTemp === '') document.getElementById('buttonSaveUpdate').disabled = true;
+        else document.getElementById('buttonSaveUpdate').disabled = false;
+    };
+    @action('Update modal data city') handleDataInputCity = (e) => {
+        this.inputValueCity = e.target.value;
+        if (this.inputValueCity === '') document.getElementById('buttonSaveUpdate').disabled = true;
+        else document.getElementById('buttonSaveUpdate').disabled = false;
+    };
+    @action updateDataForm = (e) => {
+        e.preventDefault();
+        this.data[0].name =  this.inputValueCity;
+        this.data[0].temp = this.inputValueTemp;
+        this.isOpenModalUpdateTable = false;
+        // this.inputValueTemp this.inputValueCity
+    };
+    //  При нажатии нa enter
+    @action('Send data on click enter') handleKeyPress = (e) => {
+        if (e.key === "Enter") return this.formSendCoutry();
+    };
+    // Осуществляет запрос на api и получает ответ, при клике на кнопку
+    @action('Send request API weather') formSendCoutry = async (e) => {
+        e.preventDefault();
+        // `https://api.openweathermap.org/data/2.5/weather?q=${this.state.text}&appid=bcd470ab4ddba97b244ed20fafeb41a7`
+        /* Через библу axios попроще, потому что просто приходит объект */
+        await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.inputValue}&appid=bcd470ab4ddba97b244ed20fafeb41a7`)
+            .then(res => {
+                runInAction(() => {
+                    this.result = res.data;
+                    this.data.push({ key: `${this.id++}`, name: res.data.name, temp: Math.round(res.data.main.temp) - 273 })
+                })
+                console.log(this.data);
+                console.log(res.data);
+                // console.log(this.nameCountry, this.temp);
+                // return this.tesData = {name: res.data.name, temp: res.data.main.temp};
+            })
+            .catch((error) => {
+                if (error.response) {
+                    alert("Не существует такого города");
+                } else if (error.request) {
+                    alert("Данные не отправлены");
+                }
+                // handle error
+            })
+        document.querySelector('.formSendCoutry').reset();
     };
     // get createModal
     createModalDeleCountry(city) {
@@ -156,102 +225,42 @@ class Store {
             <Modal>
                 <div onClick={this.modalClose} className="modal">
                     <div className="modalContent">
-                        <from>
+                        <form onSubmit={this.updateDataForm}>
                             <div className="modalHeader">
                                 <span className="modalClose">&times;</span>
                                 <img className="sadSunImg" src="https://img.icons8.com/clouds/100/000000/sad-sun.png" alt="" />
                             </div>
                             <div className="modalBodyUpdateTable">
-                                <form>
-                                    {/* <Input
-                                    inputValueCity
-                                    // onChange={store.handleDataInput}
-                                    value={}
-                                    name="text"
-                                    type="text"
-                                />
-                                <Input
-                                    inputValueTemp
-                                    // onChange={store.handleDataInput}
-                                    value={}
-                                    name="text"
-                                    type="text"
-                                /> */}
-                                    <input onChange={this.handleDataInputCity} className="input inputValueCity" defaultValue={dataTable[0].name} />
-                                    <input onChange={this.handleDataInputTemp} className="input inputValueTemp" defaultValue={Math.round(dataTable[0].temp) - 273} />
-                                </form>
+                                {/* <Input
+                                        inputValueCity
+                                        // onChange={store.handleDataInput}
+                                        value={}
+                                        name="text"
+                                        type="text"
+                                    />
+                                    <Input
+                                        inputValueTemp
+                                        // onChange={store.handleDataInput}
+                                        value={}
+                                        name="text"
+                                        type="text"
+                                    /> */}
+                                <input onChange={this.handleDataInputCity} className="input inputValueCity" defaultValue={dataTable[0].name} />
+                                <input onChange={this.handleDataInputTemp} className="input inputValueTemp" defaultValue={dataTable[0].temp} />
                             </div>
                             <div className="modalFooterUpdateTable">
-                                <button className="button" >Сохранить</button>
+                                <button className="button" id="buttonSaveUpdate" type="submit">Сохранить</button>
                                 <button className="button buttonAbort" >Отменить</button>
                                 {/* <h3>Футер модального окна</h3> */}
                                 {/* <button className="button" >Сохранить</button>
-                            <button className="button" >Отменить</button> */}
+                                <button className="button" >Отменить</button> */}
                             </div>
-                        </from>
+                        </form>
                     </div>
                 </div>
             </Modal>
         );
     }
-    // Перемещение по таблице вверх
-    @action up = (index) => {
-        // if (this.data.length === 2) {
-        //     // return console.log('1');
-        // } else if (this.data.length >= 3) {
-        //     this.data.push(this.data.shift());
-        // }
-        return (index === 0) ? console.log(1) : (index === this.data.length - 1 && this.data.length - 1 === 1) ? console.log(0) : this.data.push(this.data.shift());;
-    }
-    // Перемещение по таблице вниз
-    @action down = (index) => {
-        // if (this.data.length === 2) {
-        //     return console.log('1');
-        // } else if (this.data.length >= 3) {
-        //     this.data.unshift(this.data.pop());
-        // }
-        return (index === this.data.length - 1) ? console.log(1) : (index === 0 && this.data.length - 1 === 1) ? console.log(0) : this.data.unshift(this.data.pop());
-    };
-    // Изменяет состояние инпута 
-    @action handleDataInput = (e) => {
-        return this.inputValue = e.target.value;
-    };
-    @action handleDataInputTemp = (e) => {
-        this.inputValueTemp = e.target.value;
-    };
-    @action handleDataInputCity = (e) => {
-        this.inputValueCity = e.target.value;
-    };
-    //  При нажатии нa enter
-    @action handleKeyPress = (e) => {
-        if (e.key === "Enter") return this.formSendCoutry();
-    };
-    // Осуществляет запрос на api и получает ответ, при клике на кнопку
-    @action formSendCoutry = async (e) => {
-        e.preventDefault();
-        // `https://api.openweathermap.org/data/2.5/weather?q=${this.state.text}&appid=bcd470ab4ddba97b244ed20fafeb41a7`
-        /* Через библу axios попроще, потому что просто приходит объект */
-        await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.inputValue}&appid=bcd470ab4ddba97b244ed20fafeb41a7`)
-            .then(res => {
-                runInAction(() => {
-                    this.result = res.data;
-                    this.data.push({ key: `${this.id++}`, name: res.data.name, temp: res.data.main.temp })
-                })
-                console.log(this.data);
-                console.log(res.data);
-                // console.log(this.nameCountry, this.temp);
-                // return this.tesData = {name: res.data.name, temp: res.data.main.temp};
-            })
-            .catch((error) => {
-                if (error.response) {
-                    alert("Не существует такого города");
-                } else if (error.request) {
-                    alert("Данные не отправлены");
-                }
-                // handle error
-            })
-        document.querySelector('.formSendCoutry').reset();
-    };
 
     // очищение поля, надо придумать что то оригинальней
     // document.getElementById('FormSendCoutry').reset();
